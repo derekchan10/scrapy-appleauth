@@ -1,4 +1,5 @@
 from scrapy import signals
+from scrapy.utils.conf import closest_scrapy_cfg
 import jwt
 import time
 
@@ -20,7 +21,9 @@ class AppleAuthDownloaderMiddleware(object):
     def from_crawler(cls, crawler):
         # This method is used by Scrapy to create your spiders.
         apple_secure = ''
-        with open(crawler.settings['APPLE_SECURE']) as f:
+        root_path = '/'.join(closest_scrapy_cfg().split('/')[0:-1])
+        bot_path = root_path + '/' + crawler.settings['BOT_NAME'] + '/'
+        with open(bot_path + crawler.settings['APPLE_SECURE']) as f:
             apple_secure = f.read()
         s = cls(crawler.settings, apple_secure)
         crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
