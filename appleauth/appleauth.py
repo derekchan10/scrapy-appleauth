@@ -23,7 +23,8 @@ class AppleAuthDownloaderMiddleware(object):
         apple_secure = ''
         root_path = '/'.join(closest_scrapy_cfg().split('/')[0:-1])
         bot_path = root_path + '/' + crawler.settings['BOT_NAME'] + '/'
-        with open(bot_path + crawler.settings['APPLE_SECURE']) as f:
+        config_path = crawler.settings['APPLE_SECURE'] if crawler.settings['APPLE_SECURE'][0:1] == '/' else bot_path + crawler.settings['APPLE_SECURE']
+        with open(config_path) as f:
             apple_secure = f.read()
         s = cls(crawler.settings, apple_secure)
         crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)

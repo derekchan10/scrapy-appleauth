@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = "scrapy-appleauth",
-    version = "0.1.0",
+    version = "0.1.1",
     keywords = ("pip", "datacanvas", "eds", "xiaoh"),
     description = "apple auth downloader middleware for scrapy",
     long_description = "apple auth downloader middleware for scrapy",
