@@ -45,7 +45,7 @@ class AppleAuthDownloaderMiddleware(object):
             "aud": "appstoreconnect-v1"
         }
 
-        return jwt.encode(
+        result = jwt.encode(
             payload,
             self.apple_secure,
             algorithm=self.algorithm,
@@ -54,7 +54,12 @@ class AppleAuthDownloaderMiddleware(object):
                 'kid': self.apple_key,
                 'typ': 'JWT'
             }
-        ).decode('utf-8')
+        )
+
+        if (isinstance(result, bytes)):
+            return result.decode('utf-8')
+        else:
+            return result
 
     def process_response(self, request, response, spider):
         # Called with the response returned from the downloader.
